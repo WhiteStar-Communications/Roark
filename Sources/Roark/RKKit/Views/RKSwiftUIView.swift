@@ -7,6 +7,6 @@
 
 import SwiftUI
 
-public protocol RKSwiftView : View {    
+public protocol RKSwiftUIView : View {    
     var viewModel: RKViewModel { get set }
 }
