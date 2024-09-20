@@ -37,7 +37,7 @@ open class RKSwiftUIViewController<VM: RKViewModel> : UIViewController,
         preconditionFailure("SocietyViewController.storyboardID() must be overriden.")
     }
 
-    open class func create<T: RKSwiftUIViewController>(view: some View,
+    open class func create<T: RKSwiftUIViewController>(view: some RKSwiftUIView,
                                                        viewModel: VM) -> T {
         let vc = T()
         vc.setView(view)
@@ -45,7 +45,7 @@ open class RKSwiftUIViewController<VM: RKViewModel> : UIViewController,
         return vc
     }
     
-    open func setView(_ view: some View) {
+    open func setView(_ view: some RKSwiftUIView) {
         _ = self
         let hostingController = UIHostingController(rootView: view)
         addChild(hostingController)
