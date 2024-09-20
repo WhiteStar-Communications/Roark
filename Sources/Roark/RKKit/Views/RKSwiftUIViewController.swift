@@ -10,14 +10,14 @@ import UIKit
 import SwiftUI
 import Combine
 
-open class RKSwiftUIViewController<V: RKSwiftUIView> : UIViewController,
-                                                       RKNavigationControllerDelegate {
+open class RKSwiftUIViewController<V: RKSwiftUIView, VM: RKViewModel> : UIViewController,
+                                                                        RKNavigationControllerDelegate {
 
     //
     // MARK: Life Cycle Properties
     //
     
-    open var viewModel : RKViewModel!
+    open var viewModel : VM!
 
     open var cancellables = Set<AnyCancellable>()
 
@@ -37,20 +37,25 @@ open class RKSwiftUIViewController<V: RKSwiftUIView> : UIViewController,
         preconditionFailure("SocietyViewController.storyboardID() must be overriden.")
     }
 
-    open class func create<T: RKSwiftUIViewController>(view: V) -> T {
+    open class func create<T: RKSwiftUIViewController>(view: V, viewModel: VM) -> T {
         let vc = T()
         vc.setView(view)
+        vc.setModel(viewModel)
         return vc
     }
     
     open func setView(_ view: V) {
         _ = self
-        self.viewModel = view.viewModel
         let hostingController = UIHostingController(rootView: view)
         addChild(hostingController)
         self.view.addSubview(hostingController.view)
         hostingController.view.frame = self.view.bounds
         hostingController.didMove(toParent: self)
+    }
+    
+    open func setModel(_ viewModel: VM) {
+        _ = self
+        self.viewModel = viewModel
     }
 
     //
