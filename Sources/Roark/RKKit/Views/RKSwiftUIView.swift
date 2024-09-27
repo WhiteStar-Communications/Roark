@@ -8,5 +8,5 @@
 import SwiftUI
 
 public protocol RKSwiftUIView: View {
-    
+    var viewModel: RKViewModel { get set }
 }

@@ -42,12 +42,11 @@ open class RKSwiftUIViewController<V: RKSwiftUIView, VM: RKViewModel> : UIViewCo
                                                        viewModel: VM,
                                                        isModal: Bool = false) -> T {
         let vc = T()
-        vc.setView(view, isModal)
-        vc.setModel(viewModel)
+        vc.setViewAndModel(view, viewModel, isModal)
         return vc
     }
     
-    open func setView(_ view: V, _ isModal: Bool) {
+    open func setViewAndModel(_ view: V, _ model: VM, _ isModal: Bool) {
         _ = self
         let hostingController = UIHostingController(rootView: view)
         addChild(hostingController)
@@ -56,11 +55,8 @@ open class RKSwiftUIViewController<V: RKSwiftUIView, VM: RKViewModel> : UIViewCo
         hostingController.view.frame = self.view.bounds
         hostingController.didMove(toParent: self)
         self.baseView = view
-    }
-    
-    open func setModel(_ viewModel: VM) {
-        _ = self
-        self.viewModel = viewModel
+        self.baseView.viewModel = model
+        self.viewModel = model
     }
 
     //
