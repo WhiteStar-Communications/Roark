@@ -38,19 +38,21 @@ open class RKSwiftUIViewController<VM: RKViewModel> : UIViewController,
     }
 
     open class func create<T: RKSwiftUIViewController>(view: some RKSwiftUIView,
-                                                       viewModel: VM) -> T {
+                                                       viewModel: VM,
+                                                       isModal: Bool = false) -> T {
         let vc = T()
-        vc.setView(view)
+        vc.setView(view, isModal)
         vc.setModel(viewModel)
         return vc
     }
     
-    open func setView(_ view: some RKSwiftUIView) {
+    open func setView(_ view: some RKSwiftUIView, _ isModal: Bool) {
         _ = self
         let hostingController = UIHostingController(rootView: view)
         addChild(hostingController)
         self.view.addSubview(hostingController.view)
         hostingController.view.frame = self.view.bounds
+        hostingController.isModalInPresentation = isModal
         hostingController.didMove(toParent: self)
     }
     
