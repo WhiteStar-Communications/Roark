@@ -16,6 +16,7 @@ open class RKSwiftUIViewController<VM: RKViewModel> : UIViewController,
     //
     // MARK: Life Cycle Properties
     //
+    open var baseView: (any RKSwiftUIView)?
     
     open var viewModel : VM!
 
@@ -54,6 +55,7 @@ open class RKSwiftUIViewController<VM: RKViewModel> : UIViewController,
         self.view.addSubview(hostingController.view)
         hostingController.view.frame = self.view.bounds
         hostingController.didMove(toParent: self)
+        self.baseView = view
     }
     
     open func setModel(_ viewModel: VM) {
