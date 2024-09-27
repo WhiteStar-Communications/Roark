@@ -55,7 +55,6 @@ open class RKSwiftUIViewController<V: RKSwiftUIView, VM: RKViewModel> : UIViewCo
         hostingController.view.frame = self.view.bounds
         hostingController.didMove(toParent: self)
         self.baseView = view
-        self.baseView.viewModel = model
         self.viewModel = model
     }
 
