@@ -10,13 +10,13 @@ import UIKit
 import SwiftUI
 import Combine
 
-open class RKSwiftUIViewController<VM: RKViewModel> : UIViewController,
-                                                      RKNavigationControllerDelegate {
+open class RKSwiftUIViewController<V: RKSwiftUIView, VM: RKViewModel> : UIViewController,
+                                                                        RKNavigationControllerDelegate {
 
     //
     // MARK: Life Cycle Properties
     //
-    open var baseView: (any RKSwiftUIView)?
+    open var baseView: V!
     
     open var viewModel : VM!
 
@@ -38,7 +38,7 @@ open class RKSwiftUIViewController<VM: RKViewModel> : UIViewController,
         preconditionFailure("SocietyViewController.storyboardID() must be overriden.")
     }
 
-    open class func create<T: RKSwiftUIViewController>(view: some RKSwiftUIView,
+    open class func create<T: RKSwiftUIViewController>(view: V,
                                                        viewModel: VM,
                                                        isModal: Bool = false) -> T {
         let vc = T()
@@ -47,7 +47,7 @@ open class RKSwiftUIViewController<VM: RKViewModel> : UIViewController,
         return vc
     }
     
-    open func setView(_ view: some RKSwiftUIView, _ isModal: Bool) {
+    open func setView(_ view: V, _ isModal: Bool) {
         _ = self
         let hostingController = UIHostingController(rootView: view)
         addChild(hostingController)
