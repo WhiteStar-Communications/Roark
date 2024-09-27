@@ -50,9 +50,9 @@ open class RKSwiftUIViewController<VM: RKViewModel> : UIViewController,
         _ = self
         let hostingController = UIHostingController(rootView: view)
         addChild(hostingController)
+        isModalInPresentation = isModal
         self.view.addSubview(hostingController.view)
         hostingController.view.frame = self.view.bounds
-        hostingController.isModalInPresentation = isModal
         hostingController.didMove(toParent: self)
     }
     
