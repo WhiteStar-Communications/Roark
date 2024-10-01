@@ -15,9 +15,7 @@ open class RKSwiftUIViewController<V: RKSwiftUIView, VM: RKViewModel> : UIViewCo
 
     //
     // MARK: Life Cycle Properties
-    //
-    let orientationModel = RKOrientationModel()
-    
+    //    
     open var hostingController: UIHostingController<V>!
     
     open var baseView: V!
@@ -71,7 +69,7 @@ open class RKSwiftUIViewController<V: RKSwiftUIView, VM: RKViewModel> : UIViewCo
     
     @objc func orientationDidChange() {
         // Alert SwiftUI view of change
-        orientationModel.updateOrientation()
+        baseView.orientationModel.updateOrientation()
 
         // Adjust the hosting controller's view frame
         hostingController?.view.frame = self.view.bounds
