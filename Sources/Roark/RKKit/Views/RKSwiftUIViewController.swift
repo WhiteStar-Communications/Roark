@@ -69,7 +69,7 @@ open class RKSwiftUIViewController<V: RKSwiftUIView, VM: RKViewModel> : UIViewCo
                                                object: nil)
     }
     
-    @objc fileprivate func orientationDidChange() {
+    @objc open func orientationDidChange() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.25,
                                       execute: { [weak self] in
             guard let self = self else { return }            
