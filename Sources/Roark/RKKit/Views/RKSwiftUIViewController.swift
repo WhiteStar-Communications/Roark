@@ -59,6 +59,7 @@ open class RKSwiftUIViewController<V: RKSwiftUIView, VM: RKViewModel> : UIViewCo
         self.hostingController = hostingController
         self.baseView = view
         self.baseView.orientationModel = RKOrientationModel()
+        self.baseView.viewModel = model
         self.viewModel = model
         
         // Register for orientation changes
@@ -70,7 +71,7 @@ open class RKSwiftUIViewController<V: RKSwiftUIView, VM: RKViewModel> : UIViewCo
     
     @objc fileprivate func orientationDidChange() {
         // Alert SwiftUI view of change
-        baseView.orientationModel.updateOrientation()
+        baseView.orientationModel?.updateOrientation()
 
         // Adjust the hosting controller's view frame
         hostingController?.view.frame = self.view.bounds
