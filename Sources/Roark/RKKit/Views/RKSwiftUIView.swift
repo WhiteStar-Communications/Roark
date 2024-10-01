@@ -9,5 +9,4 @@ import SwiftUI
 
 public protocol RKSwiftUIView: View {
     var orientationModel: RKOrientationModel? { get set }
-    var viewModel: RKViewModel? { get set }
 }

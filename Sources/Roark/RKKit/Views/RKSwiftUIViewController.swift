@@ -59,7 +59,6 @@ open class RKSwiftUIViewController<V: RKSwiftUIView, VM: RKViewModel> : UIViewCo
         self.hostingController = hostingController
         self.baseView = view
         self.baseView.orientationModel = RKOrientationModel()
-        self.baseView.viewModel = model
         self.viewModel = model
         
         // Register for orientation changes
