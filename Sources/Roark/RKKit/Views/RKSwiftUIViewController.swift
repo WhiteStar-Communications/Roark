@@ -23,6 +23,8 @@ open class RKSwiftUIViewController<V: RKSwiftUIView, VM: RKViewModel> : UIViewCo
     open var viewModel : VM!
 
     open var cancellables = Set<AnyCancellable>()
+    
+    let onOrientationChange = PassthroughSubject<Void, Never>()
 
     open func resetCancellables() {
         self.cancellables.removeAll()
@@ -58,7 +60,6 @@ open class RKSwiftUIViewController<V: RKSwiftUIView, VM: RKViewModel> : UIViewCo
         hostingController.didMove(toParent: self)
         self.hostingController = hostingController
         self.baseView = view
-        self.baseView.orientationModel = RKOrientationModel()
         self.viewModel = model
         
         // Register for orientation changes
@@ -71,16 +72,10 @@ open class RKSwiftUIViewController<V: RKSwiftUIView, VM: RKViewModel> : UIViewCo
     @objc fileprivate func orientationDidChange() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.25,
                                       execute: { [weak self] in
-            guard let self = self else { return }
-            // Alert SwiftUI view of change
-            self.baseView.orientationModel?.updateOrientation()
-            
+            guard let self = self else { return }            
             // Adjust the hosting controller's view frame
             self.hostingController?.view.frame = self.view.bounds
         })
-        
-        
-
     }
 
     //
