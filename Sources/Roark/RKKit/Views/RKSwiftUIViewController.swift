@@ -16,6 +16,10 @@ open class RKSwiftUIViewController<V: RKSwiftUIView, VM: RKViewModel> : UIViewCo
     //
     // MARK: Life Cycle Properties
     //
+    let orientationModel = RKOrientationModel()
+    
+    open var hostingController: UIHostingController<V>!
+    
     open var baseView: V!
     
     open var viewModel : VM!
@@ -54,8 +58,23 @@ open class RKSwiftUIViewController<V: RKSwiftUIView, VM: RKViewModel> : UIViewCo
         self.view.addSubview(hostingController.view)
         hostingController.view.frame = self.view.bounds
         hostingController.didMove(toParent: self)
+        self.hostingController = hostingController
         self.baseView = view
         self.viewModel = model
+        
+        // Register for orientation changes
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(orientationDidChange),
+                                               name: UIDevice.orientationDidChangeNotification,
+                                               object: nil)
+    }
+    
+    @objc func orientationDidChange() {
+        // Alert SwiftUI view of change
+        orientationModel.updateOrientation()
+
+        // Adjust the hosting controller's view frame
+        hostingController?.view.frame = self.view.bounds
     }
 
     //
