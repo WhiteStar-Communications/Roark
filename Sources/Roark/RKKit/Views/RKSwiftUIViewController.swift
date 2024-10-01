@@ -24,8 +24,6 @@ open class RKSwiftUIViewController<V: RKSwiftUIView, VM: RKViewModel> : UIViewCo
 
     open var cancellables = Set<AnyCancellable>()
     
-    let onOrientationChange = PassthroughSubject<Void, Never>()
-
     open func resetCancellables() {
         self.cancellables.removeAll()
     }
