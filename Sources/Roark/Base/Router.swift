@@ -24,7 +24,7 @@ public protocol Routable: AnyObject, Presentable {
     func popToRoot  (animated: Bool)
 }
 
-final public class Router: NSObject, Routable {
+public class Router: NSObject, Routable {
 
     public let navigationController: UINavigationController
 
