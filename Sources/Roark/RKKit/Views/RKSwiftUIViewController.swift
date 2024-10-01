@@ -69,11 +69,18 @@ open class RKSwiftUIViewController<V: RKSwiftUIView, VM: RKViewModel> : UIViewCo
     }
     
     @objc fileprivate func orientationDidChange() {
-        // Alert SwiftUI view of change
-        baseView.orientationModel?.updateOrientation()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25,
+                                      execute: { [weak self] in
+            guard let self = self else { return }
+            // Alert SwiftUI view of change
+            self.baseView.orientationModel?.updateOrientation()
+            
+            // Adjust the hosting controller's view frame
+            self.hostingController?.view.frame = self.view.bounds
+        })
+        
+        
 
-        // Adjust the hosting controller's view frame
-        hostingController?.view.frame = self.view.bounds
     }
 
     //

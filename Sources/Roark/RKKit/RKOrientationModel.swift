@@ -9,7 +9,7 @@ import SwiftUI
 
 // ObservableObject to track orientation changes
 public class RKOrientationModel: ObservableObject {
-    @Published var isPortrait: Bool = true
+    @Published public var isPortrait: Bool = true
 
     // Function to update orientation
     func updateOrientation() {
