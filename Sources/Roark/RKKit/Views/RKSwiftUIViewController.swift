@@ -10,8 +10,8 @@ import UIKit
 import SwiftUI
 import Combine
 
-open class RKSwiftUIViewController<V: RKSwiftUIView, VM: RKViewModel> : UIViewController,
-                                                                        RKNavigationControllerDelegate {
+open class RKSwiftUIViewController<V: RKSwiftUIView> : UIViewController,
+                                                       RKNavigationControllerDelegate {
 
     //
     // MARK: Life Cycle Properties
@@ -20,8 +20,6 @@ open class RKSwiftUIViewController<V: RKSwiftUIView, VM: RKViewModel> : UIViewCo
     
     open var baseView: V!
     
-    open var viewModel : VM!
-
     open var cancellables = Set<AnyCancellable>()
     
     open func resetCancellables() {
@@ -41,14 +39,14 @@ open class RKSwiftUIViewController<V: RKSwiftUIView, VM: RKViewModel> : UIViewCo
     }
 
     open class func create<T: RKSwiftUIViewController>(view: V,
-                                                       viewModel: VM,
                                                        isModal: Bool = false) -> T {
         let vc = T()
-        vc.setViewAndModel(view, viewModel, isModal)
+        vc.setView(view, isModal)
         return vc
     }
     
-    open func setViewAndModel(_ view: V, _ model: VM, _ isModal: Bool) {
+    open func setView(_ view: V,
+                      _ isModal: Bool) {
         _ = self
         let hostingController = UIHostingController(rootView: view)
         addChild(hostingController)
@@ -58,7 +56,6 @@ open class RKSwiftUIViewController<V: RKSwiftUIView, VM: RKViewModel> : UIViewCo
         hostingController.didMove(toParent: self)
         self.hostingController = hostingController
         self.baseView = view
-        self.viewModel = model
         
         // Register for orientation changes
         NotificationCenter.default.addObserver(self,
